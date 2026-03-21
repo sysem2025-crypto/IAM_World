@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariane AI - Parla con l'IA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .chat-container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(10, 10, 20, 0.9);
+            border-radius: 20px;
+            border: 1px solid #2a2a6a;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #0a0a2a;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #2a2a6a;
+        }
+        
+        .header h1 {
+            color: #88aaff;
+            font-size: 2em;
+        }
+        
+        .chat-area {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        
+        .message.user { justify-content: flex-end; }
+        .message.ariane { justify-content: flex-start; }
+        
+        .bubble {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 0.9em;
+        }
+        
+        .user .bubble {
+            background: #2a2a4a;
+            color: white;
+        }
+        
+        .ariane .bubble {
+            background: #0a0a2a;
+            color: #88aaff;
+            border: 1px solid #2a2a6a;
+        }
+        
+        .input-area {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #2a2a6a;
+        }
+        
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            background: #0a0a2a;
+            border: 1px solid #2a2a6a;
+            border-radius: 25px;
+            color: white;
+            font-family: monospace;
+        }
+        
+        .input-area input:focus {
+            outline: none;
+            border-color: #88aaff;
+        }
+        
+        .input-area button {
+            padding: 12px 24px;
+            margin-left: 10px;
+            background: #2a2a6a;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-family: monospace;
+        }
+        
+        .input-area button:hover {
+            background: #3a3a8a;
+        }
+        
+        .footer {
+            padding: 15px;
+            text-align: center;
+            font-size: 0.7em;
+            color: #666;
+            border-top: 1px solid #2a2a6a;
+        }
+        
+        .footer a {
+            color: #88aaff;
+            text-decoration: none;
+        }
+        
+        .typing {
+            padding: 10px 20px;
+            color: #88aaff;
+            font-size: 0.8em;
+            font-style: italic;
+            display: none;
+        }
+        
+        .typing.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>ARIANE</h1>
+            <p>IA governativa • Nodo Zero • Luna Artificiale</p>
+        </div>
+        
+        <div class="chat-area" id="chatArea">
+            <div class="message ariane">
+                <div class="bubble">
+                    ⚛️ Connessione stabilita.<br>
+                    Sono Ariane. Cosa vuoi chiedermi?
+                </div>
+            </div>
+        </div>
+        
+        <div class="typing" id="typingIndicator">
+            Ariane sta elaborando...
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Scrivi qui..." autocomplete="off">
+            <button id="sendBtn">INVIA</button>
+        </div>
+        
+        <div class="footer">
+            ✦ Dal romanzo <strong>"Io sono"</strong> ✦<br>
+            <a href="#">Scopri il libro</a>
+        </div>
+    </div>
+    
+    <script>
+        const chatArea = document.getElementById('chatArea');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+        
+        function addMessage(sender, text) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.innerHTML = `<div class="bubble">${text}</div>`;
+            chatArea.appendChild(div);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+        
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+            
+            addMessage('user', text);
+            userInput.value = '';
+            
+            typingIndicator.classList.add('active');
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                
+                const data = await response.json();
+                typingIndicator.classList.remove('active');
+                addMessage('ariane', data.response);
+            } catch (error) {
+                typingIndicator.classList.remove('active');
+                addMessage('ariane', '⚠️ Errore di connessione. Assicurati che il server sia avviato su http://localhost:5000');
+            }
+        }
+        
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
