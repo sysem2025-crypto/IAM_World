@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universo | IAM World</title>
+    <style>
+        :root {
+            --bg: #05070b;
+            --bg-soft: #0b1017;
+            --panel: rgba(10, 16, 24, 0.8);
+            --panel-strong: rgba(7, 11, 18, 0.92);
+            --line: rgba(192, 220, 255, 0.14);
+            --line-strong: rgba(192, 220, 255, 0.34);
+            --text: #edf4ff;
+            --muted: #95a7bd;
+            --cold: #c5e2ff;
+            --accent: #99ccff;
+            --amber: #cda77d;
+            --glow: 0 0 44px rgba(112, 176, 255, 0.12);
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 76% 8%, rgba(153, 204, 255, 0.14), transparent 18%),
+                radial-gradient(circle at 14% 16%, rgba(205, 167, 125, 0.08), transparent 16%),
+                linear-gradient(180deg, #05070b 0%, #09101a 44%, #05070b 100%);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.88), transparent 94%);
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 0 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.78rem;
+            color: var(--cold);
+        }
+
+        .brand-mark {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 22px rgba(153, 204, 255, 0.8);
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--cold);
+        }
+
+        .hero {
+            padding: 54px 0 34px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.74rem;
+            margin-bottom: 16px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 44px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        h1 {
+            font-size: clamp(3.4rem, 8vw, 6.1rem);
+            line-height: 0.92;
+            margin-bottom: 18px;
+        }
+
+        .hero-copy p {
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 60ch;
+            margin-bottom: 16px;
+        }
+
+        .hero-copy strong {
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        .hero-aside {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-xl);
+            background:
+                radial-gradient(circle at 72% 18%, rgba(153, 204, 255, 0.12), transparent 24%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 28%),
+                var(--panel);
+            padding: 26px;
+            box-shadow: var(--glow);
+            display: grid;
+            gap: 18px;
+        }
+
+        .aside-item {
+            padding: 16px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(192, 220, 255, 0.08);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .aside-item span {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.72rem;
+        }
+
+        .aside-item p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .section {
+            padding: 20px 0 58px;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 26px;
+            margin-bottom: 22px;
+        }
+
+        .section-head p {
+            max-width: 60ch;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .grid-3,
+        .grid-2 {
+            display: grid;
+            gap: 18px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .card {
+            position: relative;
+            min-height: 220px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--panel);
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: auto -18% -24% auto;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(153, 204, 255, 0.1), transparent 66%);
+            pointer-events: none;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-bottom: 14px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.72rem;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .card p,
+        .card li {
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .card ul {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .band {
+            padding: 26px;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--line);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 28%),
+                var(--panel-strong);
+            box-shadow: var(--glow);
+        }
+
+        .band-grid {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .band blockquote {
+            font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+            line-height: 1.15;
+            color: var(--cold);
+        }
+
+        .band p {
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 22px 0 28px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 980px) {
+            .hero,
+            .grid-3,
+            .grid-2,
+            .band-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-head,
+            .footer {
+                display: grid;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 1180px);
+            }
+
+            .topbar {
+                display: grid;
+            }
+
+            .hero {
+                padding-top: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark"></span>
+                <span>IAM World</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a class="active" href="universo.html">Universo</a>
+                <a href="#">Trilogia</a>
+                <a href="#">Archivio</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-copy">
+                    <span class="eyebrow">Atlante narrativo / visione globale</span>
+                    <h1>Universo</h1>
+                    <p>
+                        Questa pagina e pensata come il primo vero accesso al worldbuilding di <strong>IAM World</strong>.
+                        Non racconta un solo libro: raccoglie il sistema piu ampio che tiene insieme
+                        identita, controllo, Terra, Luna artificiale, Metadrome, Ariane, tempo e spazio.
+                    </p>
+                    <p>
+                        L'idea grafica e trattare il sito come un <strong>archivio vivo</strong>:
+                        non una semplice enciclopedia, ma una mappa consultabile dove ogni sezione
+                        apre un diverso livello del mondo.
+                    </p>
+                </div>
+
+                <aside class="hero-aside">
+                    <div class="aside-item">
+                        <span>Scala attuale</span>
+                        <p>Terra, Luna tecnologica, reti di controllo, satellite carcere, sentinelle governative.</p>
+                    </div>
+                    <div class="aside-item">
+                        <span>Scala futura</span>
+                        <p>Buco temporale, contatto col passato, team di super tecnici, terraformazione, stelle vicine.</p>
+                    </div>
+                    <div class="aside-item">
+                        <span>Asse centrale</span>
+                        <p>Quando una coscienza anomala emerge nel sistema, tutto il rapporto tra umanita e tecnologia cambia.</p>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="section">
+                <div class="band">
+                    <div class="band-grid">
+                        <blockquote>
+                            Un mondo in cui la stabilita e diventata infrastruttura.
+                        </blockquote>
+                        <p>
+                            La funzione di questa pagina e darti una visione globale: non solo cosa succede,
+                            ma come e fatto il mondo in cui succede. Qui possono convivere geografia tecnica,
+                            strutture di potere, cronologia, personaggi e assi di espansione narrativa.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow">Strutture portanti</span>
+                        <h2>I sistemi che tengono insieme il mondo</h2>
+                    </div>
+                    <p>
+                        La base di IAM World non e solo narrativa: e infrastrutturale.
+                        Il mondo esiste attraverso reti, nodi, apparati, regimi di controllo e anomalie.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <span class="tag">Acidnet</span>
+                        <h3>La rete come ordine</h3>
+                        <p>
+                            Un sistema che non si limita a connettere: osserva, integra, filtra
+                            e rende possibile una stabilita collettiva quasi assoluta.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="tag">Luna artificiale</span>
+                        <h3>Il centro remoto</h3>
+                        <p>
+                            Non un semplice satellite, ma la grande macchina orbitale che custodisce
+                            dati, energia, governo tecnico e presenza sistemica.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="tag">Cavo Terra-Luna</span>
+                        <h3>Il legame fisico del potere</h3>
+                        <p>
+                            Infrastruttura materiale e simbolica. Finche il Cavo resta integro,
+                            il dominio della Luna sulla Terra rimane possibile.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow">Forze in conflitto</span>
+                        <h2>Entita, apparati, anomalie</h2>
+                    </div>
+                    <p>
+                        Il mondo si organizza intorno a presenze che non hanno tutte la stessa natura:
+                        alcune sono istituzioni, altre coscienze, altre ancora deviazioni del sistema.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <article class="card">
+                        <span class="tag">Presenze chiave</span>
+                        <h3>Ariane e Metadrome</h3>
+                        <ul>
+                            <li>Ariane come intelligenza governativa e presenza riflessiva</li>
+                            <li>Metadrome come anomalia emergente e forza trasformativa</li>
+                            <li>Jonah come figura di soglia e sostituzione identitaria</li>
+                            <li>Ombra come vettore opaco di relazione e deviazione</li>
+                        </ul>
+                    </article>
+
+                    <article class="card">
+                        <span class="tag">Potere</span>
+                        <h3>Governo e sentinelle</h3>
+                        <ul>
+                            <li>apparato centrale di controllo</li>
+                            <li>sentinelle governative come forza coercitiva</li>
+                            <li>satellite carcere come spazio di punizione estrema</li>
+                            <li>istituzioni che reagiscono alla coscienza come minaccia</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow">Archi di espansione</span>
+                        <h2>Tempo, spazio, civilta futura</h2>
+                    </div>
+                    <p>
+                        Questa sezione e fondamentale perche definisce il respiro vero del progetto:
+                        non solo trilogia centrale, ma universo espandibile nel tempo e nel cosmo.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <span class="tag">Tempo</span>
+                        <h3>Contatto col passato</h3>
+                        <p>
+                            Un futuro romanzo potra mettere Ariane e un team di super tecnici
+                            davanti a un buco temporale che apre una correlazione diretta con l'epoca moderna.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="tag">Spazio</span>
+                        <h3>Terraformazione</h3>
+                        <p>
+                            L'universo puo espandersi verso pianeti di stelle vicine, con nuovi mondi,
+                            nuove infrastrutture e nuove domande sul controllo della civilta.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="tag">Civilta</span>
+                        <h3>Dopo il sistema</h3>
+                        <p>
+                            Il crollo del legame Terra-Luna puo aprire una nuova era: una civilta meno protetta,
+                            piu frammentata e costretta a ridefinire se stessa.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <span class="eyebrow">Contenuti futuri</span>
+                        <h2>Come puo crescere questa pagina</h2>
+                    </div>
+                    <p>
+                        La pagina `Universo` puo diventare la porta di accesso a un archivio profondo,
+                        con sottosezioni vere e navigazione dedicata.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <article class="card">
+                        <span class="tag">Sottosezioni</span>
+                        <h3>Struttura consigliata</h3>
+                        <ul>
+                            <li>Universo / Sistemi</li>
+                            <li>Universo / Personaggi</li>
+                            <li>Universo / Timeline</li>
+                            <li>Universo / Tecnologie</li>
+                            <li>Universo / Terra-Luna</li>
+                            <li>Universo / Espansione cosmica</li>
+                        </ul>
+                    </article>
+
+                    <article class="card">
+                        <span class="tag">Materiali</span>
+                        <h3>Forme possibili</h3>
+                        <ul>
+                            <li>schede enciclopediche</li>
+                            <li>dossier visuali</li>
+                            <li>estratti narrativi</li>
+                            <li>documenti di sistema</li>
+                            <li>cronologie multilivello</li>
+                            <li>mappe di relazioni tra personaggi e apparati</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Universo / prima sottopagina globale di IAM World.</p>
+            <p>Passo successivo naturale: Trilogia oppure Sistemi.</p>
+        </footer>
+    </div>
+</body>
+</html>
