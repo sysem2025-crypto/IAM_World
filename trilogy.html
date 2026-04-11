@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilogy | IAM World</title>
+    <style>
+        :root {
+            --bg: #05070b;
+            --line: rgba(193, 222, 255, 0.16);
+            --line-strong: rgba(193, 222, 255, 0.34);
+            --text: #eef4ff;
+            --muted: #97a9c0;
+            --cold: #c5e2ff;
+            --accent: #99ccff;
+            --panel: rgba(8, 12, 18, 0.78);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 50% 10%, rgba(153, 204, 255, 0.15), transparent 16%),
+                linear-gradient(180deg, #05070b 0%, #09101a 54%, #05070b 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 94%);
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(1080px, calc(100% - 32px));
+            margin: 0 auto;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 0 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.78rem;
+            color: var(--cold);
+        }
+
+        .brand-mark {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(153, 204, 255, 0.82);
+        }
+
+        nav {
+            display: flex;
+            gap: 16px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--cold);
+        }
+
+        .hero {
+            padding: 46px 0 34px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            font-size: 0.74rem;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: clamp(3.8rem, 8vw, 6rem);
+            line-height: 0.92;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            max-width: 42ch;
+            margin: 0 auto;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            padding-bottom: 56px;
+        }
+
+        .card {
+            min-height: 260px;
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--panel);
+            display: grid;
+            align-content: space-between;
+            gap: 18px;
+        }
+
+        .card span {
+            display: inline-block;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.72rem;
+        }
+
+        .card h2 {
+            font-weight: 400;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 20px;
+            border-radius: 999px;
+            border: 1px solid var(--line-strong);
+            color: var(--cold);
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+            background: rgba(153, 204, 255, 0.08);
+            border-color: rgba(238, 244, 255, 0.52);
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 22px 0 28px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 1080px);
+            }
+
+            .topbar,
+            .footer {
+                display: grid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark"></span>
+                <span>IAM World</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="universo.html">Universo</a>
+                <a class="active" href="trilogy.html">Trilogy</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <p class="eyebrow">Primo ramo del sito</p>
+                <h1>Trilogy</h1>
+                <p>
+                    Qui prendera forma l'accesso ai romanzi della serie.
+                    Per ora la pagina resta semplice e organizza le tre modalita principali di fruizione.
+                </p>
+            </section>
+
+            <section class="grid">
+                <article class="card">
+                    <div>
+                        <span>Lettura</span>
+                        <h2>Read</h2>
+                        <p>
+                            Accesso alla lettura diretta del libro all'interno del sito,
+                            con struttura pulita e navigazione lineare.
+                        </p>
+                    </div>
+                    <a class="button" href="#">Leggi il libro</a>
+                </article>
+
+                <article class="card">
+                    <div>
+                        <span>Download</span>
+                        <h2>Download</h2>
+                        <p>
+                            Area dedicata al file del romanzo, per scaricarlo e conservarlo
+                            in una versione completa.
+                        </p>
+                    </div>
+                    <a class="button" href="#">Scarica il libro</a>
+                </article>
+
+                <article class="card">
+                    <div>
+                        <span>Online adventure</span>
+                        <h2>Story Pages</h2>
+                        <p>
+                            Una modalita piu immersiva, con il racconto suddiviso in pagine
+                            e pensato per una fruizione narrativa online.
+                        </p>
+                    </div>
+                    <a class="button" href="#">Apri l'avventura</a>
+                </article>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Trilogy / primo spazio di lettura del progetto</p>
+            <p>Le tre modalita potranno essere sviluppate progressivamente</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAM World</title>
+    <style>
+        :root {
+            --bg: #04060a;
+            --line: rgba(193, 222, 255, 0.16);
+            --line-strong: rgba(193, 222, 255, 0.34);
+            --text: #eef4ff;
+            --muted: #97a9c0;
+            --cold: #c5e2ff;
+            --accent: #99ccff;
+            --panel: rgba(8, 12, 18, 0.72);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 50% 16%, rgba(153, 204, 255, 0.18), transparent 16%),
+                linear-gradient(180deg, #04060a 0%, #09101a 54%, #04060a 100%);
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 94%);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(940px, calc(100% - 32px));
+            margin: 0 auto;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 0 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.78rem;
+            color: var(--cold);
+        }
+
+        .brand-mark {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(153, 204, 255, 0.82);
+        }
+
+        nav {
+            display: flex;
+            gap: 16px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--cold);
+        }
+
+        .portal {
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 40px 0 56px;
+        }
+
+        .portal-shell {
+            width: 100%;
+            display: grid;
+            gap: 26px;
+        }
+
+        .eyebrow {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            font-size: 0.74rem;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: clamp(5rem, 12vw, 8.6rem);
+            letter-spacing: 0.08em;
+            line-height: 0.88;
+        }
+
+        .subtitle {
+            color: var(--cold);
+            font-size: clamp(1.15rem, 2vw, 1.55rem);
+        }
+
+        .divider {
+            width: min(240px, 44vw);
+            height: 1px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+        }
+
+        .statement {
+            max-width: 34ch;
+            margin: 0 auto;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 1.02rem;
+        }
+
+        .entry {
+            margin: 8px auto 0;
+            width: min(420px, 100%);
+            padding: 26px;
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            background: var(--panel);
+            backdrop-filter: blur(6px);
+        }
+
+        .entry p {
+            color: var(--muted);
+            margin-bottom: 18px;
+            line-height: 1.7;
+        }
+
+        .countdown {
+            margin: 10px auto 0;
+            width: min(620px, 100%);
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .countdown-card {
+            padding: 18px 14px;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .countdown-card strong {
+            display: block;
+            color: var(--text);
+            font-weight: 400;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .countdown-card span {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.72rem;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 22px;
+            border-radius: 999px;
+            border: 1px solid var(--line-strong);
+            color: var(--cold);
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+            background: rgba(153, 204, 255, 0.08);
+            border-color: rgba(238, 244, 255, 0.52);
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 22px 0 28px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 940px);
+            }
+
+            .topbar,
+            .footer {
+                display: grid;
+            }
+
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark"></span>
+                <span>IAM World</span>
+            </div>
+            <nav>
+                <a href="universo.html">Enter</a>
+            </nav>
+        </header>
+
+        <main class="portal">
+            <section class="portal-shell">
+                <p class="eyebrow">Io sono / IAM</p>
+                <h1>IAM</h1>
+                <p class="subtitle">In italiano: <strong>Io sono</strong>.</p>
+                <div class="divider"></div>
+                <p class="statement">
+                    Una soglia. Un nome. Un ingresso nel mondo.
+                </p>
+
+                <div class="entry">
+                    <p>
+                        Questa prima pagina resta essenziale: e il portale.
+                        Il resto del sito si apre solo dopo l'ingresso.
+                    </p>
+                    <a class="button" href="universo.html">Entra nel portale</a>
+                </div>
+
+                <div class="countdown" aria-label="Countdown chiusura portale">
+                    <div class="countdown-card">
+                        <strong id="years">1000</strong>
+                        <span>Anni</span>
+                    </div>
+                    <div class="countdown-card">
+                        <strong id="days">0</strong>
+                        <span>Giorni</span>
+                    </div>
+                    <div class="countdown-card">
+                        <strong id="hours">0</strong>
+                        <span>Ore</span>
+                    </div>
+                    <div class="countdown-card">
+                        <strong id="minutes">0</strong>
+                        <span>Minuti</span>
+                    </div>
+                </div>
+
+                <p class="statement">
+                    Ariane manterra aperto il portale fino al <strong>11 aprile 3026</strong>.
+                    Dopo quella data, la finestra temporale si chiudera definitivamente.
+                </p>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Ingresso essenziale / fase iniziale del sito</p>
+            <p>Il mondo si apre nel secondo livello</p>
+        </footer>
+    </div>
+    <script>
+        const portalDeadline = new Date("3026-04-11T00:00:00+02:00").getTime();
+        const yearNode = document.getElementById("years");
+        const dayNode = document.getElementById("days");
+        const hourNode = document.getElementById("hours");
+        const minuteNode = document.getElementById("minutes");
+
+        function updateCountdown() {
+            const now = Date.now();
+            const distance = Math.max(portalDeadline - now, 0);
+
+            const minute = 1000 * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+            const year = day * 365.2425;
+
+            const years = Math.floor(distance / year);
+            const days = Math.floor((distance % year) / day);
+            const hours = Math.floor((distance % day) / hour);
+            const minutes = Math.floor((distance % hour) / minute);
+
+            yearNode.textContent = String(years);
+            dayNode.textContent = String(days);
+            hourNode.textContent = String(hours);
+            minuteNode.textContent = String(minutes);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+    </script>
+</body>
+</html>
