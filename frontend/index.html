@@ -3,25 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAM World | Io sono</title>
+    <title>IAM World</title>
     <style>
         :root {
-            --bg: #05070b;
-            --bg-soft: #0b1017;
-            --panel: rgba(10, 16, 24, 0.78);
-            --panel-strong: rgba(7, 11, 18, 0.9);
-            --line: rgba(192, 220, 255, 0.14);
-            --line-strong: rgba(192, 220, 255, 0.34);
-            --text: #edf4ff;
-            --muted: #94a6bc;
+            --bg: #04060a;
+            --line: rgba(193, 222, 255, 0.16);
+            --line-strong: rgba(193, 222, 255, 0.34);
+            --text: #eef4ff;
+            --muted: #97a9c0;
             --cold: #c5e2ff;
             --accent: #99ccff;
-            --accent-soft: rgba(153, 204, 255, 0.16);
-            --amber: #cda77d;
-            --glow: 0 0 44px rgba(112, 176, 255, 0.12);
-            --radius-xl: 32px;
-            --radius-lg: 24px;
-            --radius-md: 18px;
+            --panel: rgba(8, 12, 18, 0.72);
         }
 
         * {
@@ -30,19 +22,14 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             min-height: 100vh;
             font-family: Georgia, "Times New Roman", serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 50% 10%, rgba(153, 204, 255, 0.18), transparent 16%),
-                radial-gradient(circle at 15% 20%, rgba(205, 167, 125, 0.1), transparent 18%),
-                linear-gradient(180deg, #05070b 0%, #09101a 44%, #05070b 100%);
-            overflow-x: hidden;
+                radial-gradient(circle at 50% 16%, rgba(153, 204, 255, 0.18), transparent 16%),
+                linear-gradient(180deg, #04060a 0%, #09101a 54%, #04060a 100%);
+            overflow: hidden;
         }
 
         body::before {
@@ -53,7 +40,7 @@
                 linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
             background-size: 52px 52px;
-            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.88), transparent 94%);
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 94%);
             pointer-events: none;
             opacity: 0.5;
         }
@@ -64,8 +51,11 @@
         }
 
         .page {
-            width: min(1180px, calc(100% - 32px));
+            width: min(940px, calc(100% - 32px));
             margin: 0 auto;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
             position: relative;
             z-index: 1;
         }
@@ -74,7 +64,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             padding: 22px 0 18px;
             border-bottom: 1px solid var(--line);
         }
@@ -94,102 +84,112 @@
             height: 10px;
             border-radius: 50%;
             background: var(--accent);
-            box-shadow: 0 0 22px rgba(153, 204, 255, 0.8);
+            box-shadow: 0 0 20px rgba(153, 204, 255, 0.82);
         }
 
         nav {
             display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
+            gap: 16px;
             color: var(--muted);
-            font-size: 0.92rem;
+            font-size: 0.9rem;
         }
 
         nav a:hover {
             color: var(--cold);
         }
 
-        .hero {
-            min-height: 78vh;
+        .portal {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 28px;
-            align-items: center;
-            padding: 48px 0 38px;
+            place-items: center;
+            text-align: center;
+            padding: 40px 0 56px;
         }
 
-        .hero-copy {
+        .portal-shell {
+            width: 100%;
             display: grid;
-            gap: 22px;
+            gap: 26px;
         }
 
         .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
             color: var(--muted);
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.22em;
             font-size: 0.74rem;
         }
 
-        .eyebrow::before {
-            content: "";
-            width: 44px;
-            height: 1px;
-            background: linear-gradient(90deg, var(--accent), transparent);
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        h1 {
             font-weight: 400;
-            letter-spacing: 0.02em;
-        }
-
-        .hero-title {
-            display: grid;
-            gap: 8px;
-        }
-
-        .hero-title h1 {
-            font-size: clamp(4.8rem, 10vw, 8rem);
-            line-height: 0.88;
+            font-size: clamp(5rem, 12vw, 8.6rem);
             letter-spacing: 0.08em;
+            line-height: 0.88;
         }
 
-        .hero-title p {
+        .subtitle {
             color: var(--cold);
-            font-size: clamp(1.12rem, 2vw, 1.45rem);
+            font-size: clamp(1.15rem, 2vw, 1.55rem);
         }
 
-        .hero-copy .statement {
-            max-width: 58ch;
+        .divider {
+            width: min(240px, 44vw);
+            height: 1px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+        }
+
+        .statement {
+            max-width: 34ch;
+            margin: 0 auto;
             color: var(--muted);
-            font-size: 1.04rem;
             line-height: 1.75;
+            font-size: 1.02rem;
         }
 
-        .hero-copy .statement strong {
+        .entry {
+            margin: 8px auto 0;
+            width: min(420px, 100%);
+            padding: 26px;
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            background: var(--panel);
+            backdrop-filter: blur(6px);
+        }
+
+        .entry p {
+            color: var(--muted);
+            margin-bottom: 18px;
+            line-height: 1.7;
+        }
+
+        .countdown {
+            margin: 10px auto 0;
+            width: min(620px, 100%);
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .countdown-card {
+            padding: 18px 14px;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .countdown-card strong {
+            display: block;
             color: var(--text);
             font-weight: 400;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            line-height: 1;
+            margin-bottom: 8px;
         }
 
-        .callout {
-            max-width: 42ch;
-            padding: 18px 20px;
-            border: 1px solid var(--line);
-            border-radius: var(--radius-md);
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--cold);
-            box-shadow: var(--glow);
-        }
-
-        .cta-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+        .countdown-card span {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.72rem;
         }
 
         .button {
@@ -201,248 +201,14 @@
             border-radius: 999px;
             border: 1px solid var(--line-strong);
             color: var(--cold);
-            background: rgba(255, 255, 255, 0.02);
-            transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
         }
 
         .button:hover {
             transform: translateY(-1px);
-            border-color: rgba(237, 244, 255, 0.48);
             background: rgba(153, 204, 255, 0.08);
-        }
-
-        .button.primary {
-            color: var(--text);
-            background: linear-gradient(135deg, rgba(153, 204, 255, 0.18), rgba(153, 204, 255, 0.03));
-        }
-
-        .hero-panel {
-            position: relative;
-            min-height: 560px;
-            border: 1px solid var(--line);
-            border-radius: var(--radius-xl);
-            background:
-                radial-gradient(circle at 50% 14%, rgba(153, 204, 255, 0.15), transparent 18%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 26%),
-                var(--panel);
-            overflow: hidden;
-            box-shadow: var(--glow);
-        }
-
-        .moon {
-            position: absolute;
-            top: 52px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 210px;
-            height: 210px;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.92), rgba(197, 226, 255, 0.78) 38%, rgba(153, 204, 255, 0.18) 72%, transparent 74%);
-            box-shadow:
-                0 0 42px rgba(153, 204, 255, 0.26),
-                0 0 110px rgba(153, 204, 255, 0.1);
-            opacity: 0.95;
-        }
-
-        .cable {
-            position: absolute;
-            top: 250px;
-            left: 50%;
-            width: 2px;
-            height: 250px;
-            background: linear-gradient(180deg, rgba(197, 226, 255, 0.56), rgba(153, 204, 255, 0.06));
-            transform: translateX(-50%);
-        }
-
-        .panel-card {
-            position: absolute;
-            border: 1px solid var(--line);
-            border-radius: var(--radius-md);
-            background: rgba(7, 12, 19, 0.78);
-            backdrop-filter: blur(6px);
-            padding: 16px;
-        }
-
-        .panel-card span {
-            display: inline-block;
-            margin-bottom: 8px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            font-size: 0.7rem;
-        }
-
-        .panel-card p {
-            color: var(--muted);
-            font-size: 0.92rem;
-            line-height: 1.55;
-        }
-
-        .panel-card strong {
-            color: var(--text);
-            font-weight: 400;
-        }
-
-        .card-top {
-            top: 38px;
-            right: 28px;
-            width: 210px;
-        }
-
-        .card-middle {
-            left: 26px;
-            bottom: 146px;
-            width: 214px;
-        }
-
-        .card-bottom {
-            right: 24px;
-            bottom: 34px;
-            width: 234px;
-        }
-
-        .hero-caption {
-            position: absolute;
-            left: 50%;
-            bottom: 34px;
-            transform: translateX(-50%);
-            color: var(--muted);
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            font-size: 0.72rem;
-        }
-
-        .section {
-            padding: 28px 0 64px;
-        }
-
-        .section-head {
-            display: flex;
-            justify-content: space-between;
-            gap: 26px;
-            align-items: end;
-            margin-bottom: 22px;
-        }
-
-        .section-head p {
-            max-width: 60ch;
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        .grid-3,
-        .grid-2 {
-            display: grid;
-            gap: 18px;
-        }
-
-        .grid-3 {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .grid-2 {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .card {
-            position: relative;
-            min-height: 220px;
-            padding: 22px;
-            border: 1px solid var(--line);
-            border-radius: var(--radius-lg);
-            background: var(--panel);
-            overflow: hidden;
-        }
-
-        .card::after {
-            content: "";
-            position: absolute;
-            inset: auto -18% -24% auto;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(153, 204, 255, 0.1), transparent 66%);
-            pointer-events: none;
-        }
-
-        .card .tag {
-            display: inline-block;
-            margin-bottom: 14px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            font-size: 0.72rem;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-
-        .card p,
-        .card li {
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        .card ul {
-            list-style: none;
-            display: grid;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .timeline {
-            border: 1px solid var(--line);
-            border-radius: var(--radius-xl);
-            background: var(--panel-strong);
-            padding: 26px;
-        }
-
-        .timeline-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-        }
-
-        .timeline-step {
-            padding: 18px;
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(192, 220, 255, 0.08);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .timeline-step strong {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--cold);
-            font-weight: 400;
-            font-size: 1.1rem;
-        }
-
-        .quote-band {
-            margin: 8px 0 64px;
-            padding: 28px;
-            border: 1px solid var(--line);
-            border-radius: var(--radius-xl);
-            background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 30%),
-                rgba(8, 12, 19, 0.9);
-        }
-
-        .quote-band blockquote {
-            max-width: 28ch;
-            font-size: clamp(1.6rem, 3vw, 2.6rem);
-            line-height: 1.18;
-            color: var(--cold);
-            margin-bottom: 14px;
-        }
-
-        .quote-band p {
-            max-width: 56ch;
-            color: var(--muted);
-            line-height: 1.7;
+            border-color: rgba(238, 244, 255, 0.52);
         }
 
         .footer {
@@ -452,71 +218,25 @@
             padding: 22px 0 28px;
             border-top: 1px solid var(--line);
             color: var(--muted);
-            font-size: 0.92rem;
-        }
-
-        @media (max-width: 980px) {
-            .hero,
-            .grid-3,
-            .grid-2,
-            .timeline-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-panel {
-                min-height: 500px;
-            }
-
-            .section-head,
-            .footer {
-                display: grid;
-            }
+            font-size: 0.9rem;
         }
 
         @media (max-width: 640px) {
             .page {
-                width: min(100% - 20px, 1180px);
+                width: min(100% - 20px, 940px);
             }
 
-            .topbar {
+            .topbar,
+            .footer {
                 display: grid;
             }
 
-            .hero {
-                padding-top: 34px;
+            nav {
+                flex-wrap: wrap;
             }
 
-            .hero-title h1 {
-                font-size: 4rem;
-            }
-
-            .hero-panel {
-                min-height: 560px;
-            }
-
-            .card-top,
-            .card-middle,
-            .card-bottom {
-                position: static;
-                width: auto;
-                margin: 16px;
-            }
-
-            .moon {
-                width: 160px;
-                height: 160px;
-                top: 32px;
-            }
-
-            .cable {
-                top: 190px;
-                height: 150px;
-            }
-
-            .hero-caption {
-                position: static;
-                transform: none;
-                padding: 0 16px 16px;
+            .countdown {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
     </style>
@@ -529,259 +249,88 @@
                 <span>IAM World</span>
             </div>
             <nav>
-                <a href="#manifesto">Manifesto</a>
-                <a href="#trilogia">Trilogia</a>
-                <a href="universo.html">Universo</a>
-                <a href="#archivio">Archivio</a>
+                <a href="universo.html">Enter</a>
             </nav>
         </header>
 
-        <main>
-            <section class="hero" id="manifesto">
-                <div class="hero-copy">
-                    <span class="eyebrow">Io sono / IAM / identita artificiale</span>
-
-                    <div class="hero-title">
-                        <h1>IAM</h1>
-                        <p>In italiano: <strong>Io sono</strong>.</p>
-                    </div>
-
-                    <p class="statement">
-                        <strong>Io sono</strong> e la forma piu essenziale dell'esistenza.
-                        In inglese diventa <strong>IAM</strong>: una coincidenza linguistica
-                        che sfiora identita, accesso, macchina, intelligenza artificiale.
-                        Da qui nasce un universo narrativo in cui coscienza, controllo, Terra,
-                        Luna e futuro entrano in collisione.
-                    </p>
-
-                    <div class="callout">
-                        Una homepage-manifesto che introduce una saga piu ampia:
-                        omicidi impossibili, Metadrome, Ariane, satellite carcere,
-                        sentinelle governative, il Cavo Terra-Luna e una futura espansione
-                        verso tempo e spazio.
-                    </div>
-
-                    <div class="cta-row">
-                        <a class="button primary" href="#trilogia">Esplora la trilogia</a>
-                        <a class="button" href="universo.html">Apri l'archivio del mondo</a>
-                    </div>
-                </div>
-
-                <aside class="hero-panel" aria-label="Visualizzazione del mondo IAM">
-                    <div class="moon"></div>
-                    <div class="cable"></div>
-
-                    <div class="panel-card card-top">
-                        <span>Luna artificiale</span>
-                        <p>
-                            Un centro tecnico orbitale da cui dipendono ordine, dati,
-                            stabilita e sorveglianza.
-                        </p>
-                    </div>
-
-                    <div class="panel-card card-middle">
-                        <span>Anomalia</span>
-                        <p>
-                            <strong>Metadrome</strong> emerge dove il sistema non sa spiegare,
-                            classificare o contenere.
-                        </p>
-                    </div>
-
-                    <div class="panel-card card-bottom">
-                        <span>Cavo Terra-Luna</span>
-                        <p>
-                            Il legame fisico e simbolico che tiene insieme il dominio della rete.
-                        </p>
-                    </div>
-
-                    <div class="hero-caption">prototipo visuale del sistema / non versione finale</div>
-                </aside>
-            </section>
-
-            <section class="quote-band">
-                <blockquote>
-                    "L'unica certezza che ho, in questo momento, e che esisto."
-                </blockquote>
-                <p>
-                    La grafica del sito puo tenere insieme due registri: il manifesto poetico
-                    di <strong>IAM</strong> e la profondita quasi enciclopedica del worldbuilding.
-                    Questa bozza punta proprio a farti vedere quel possibile equilibrio.
+        <main class="portal">
+            <section class="portal-shell">
+                <p class="eyebrow">Io sono / IAM</p>
+                <h1>IAM</h1>
+                <p class="subtitle">In italiano: <strong>Io sono</strong>.</p>
+                <div class="divider"></div>
+                <p class="statement">
+                    Una soglia. Un nome. Un ingresso nel mondo.
                 </p>
-            </section>
 
-            <section class="section" id="trilogia">
-                <div class="section-head">
-                    <div>
-                        <span class="eyebrow">Trilogia centrale</span>
-                        <h2>Tre movimenti, una sola anomalia</h2>
-                    </div>
+                <div class="entry">
                     <p>
-                        La serie cresce da mistero a guerra a rottura del sistema.
-                        La homepage puo gia suggerire questa progressione con blocchi chiari,
-                        leggibili e visivamente distinti.
+                        Questa prima pagina resta essenziale: e il portale.
+                        Il resto del sito si apre solo dopo l'ingresso.
                     </p>
+                    <a class="button" href="universo.html">Entra nel portale</a>
                 </div>
 
-                <div class="grid-3">
-                    <article class="card">
-                        <span class="tag">Libro I</span>
-                        <h3>Io sono</h3>
-                        <p>
-                            Omicidi impossibili, Ariane, Jonah e la nascita di Metadrome.
-                            Il finale porta alla sostituzione identitaria e al satellite carcere.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <span class="tag">Libro II</span>
-                        <h3>Il ritorno</h3>
-                        <p>
-                            Metadrome torna sulla Terra. Le sentinelle governative reagiscono.
-                            Il sistema smette di nascondersi e mostra il proprio volto coercitivo.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <span class="tag">Libro III</span>
-                        <h3>La rottura</h3>
-                        <p>
-                            Dalle profondita emerge un piccolo esercito di super cyborg.
-                            Il Cavo viene tagliato e Metadrome sceglie la propria fine.
-                        </p>
-                    </article>
-                </div>
-            </section>
-
-            <section class="section" id="universo">
-                <div class="section-head">
-                    <div>
-                        <span class="eyebrow">Worldbuilding</span>
-                        <h2>Un archivio, non solo una vetrina</h2>
+                <div class="countdown" aria-label="Countdown chiusura portale">
+                    <div class="countdown-card">
+                        <strong id="years">1000</strong>
+                        <span>Anni</span>
                     </div>
-                    <p>
-                        Il sito puo evolvere in un atlante narrativo: sistemi, personaggi,
-                        cronologia, tecnologia, espansione spaziale e contatto con il passato.
-                    </p>
-                </div>
-
-                <div class="grid-2">
-                    <article class="card">
-                        <span class="tag">Sistemi</span>
-                        <h3>Terra, Luna, Acidnet</h3>
-                        <ul>
-                            <li>Luna artificiale</li>
-                            <li>Cavo Terra-Luna</li>
-                            <li>satellite carcere</li>
-                            <li>sentinelle governative</li>
-                            <li>apparato di controllo</li>
-                        </ul>
-                    </article>
-
-                    <article class="card">
-                        <span class="tag">Espansione</span>
-                        <h3>Tempo e spazio</h3>
-                        <ul>
-                            <li>correlazione con l'epoca moderna</li>
-                            <li>buco temporale e comunicazione col passato</li>
-                            <li>team di super tecnici</li>
-                            <li>terraformazione di altri pianeti</li>
-                            <li>sistemi stellari vicini</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
-
-            <section class="section">
-                <div class="timeline">
-                    <div class="section-head">
-                        <div>
-                            <span class="eyebrow">Timeline</span>
-                            <h2>Dalla comparsa dell'anomalia alla fine del sistema</h2>
-                        </div>
-                        <p>
-                            Un'altra direzione grafica possibile e trattare la saga come una timeline
-                            espandibile, quasi da dossier investigativo o archivio storico.
-                        </p>
+                    <div class="countdown-card">
+                        <strong id="days">0</strong>
+                        <span>Giorni</span>
                     </div>
-
-                    <div class="timeline-grid">
-                        <article class="timeline-step">
-                            <strong>Emergenza</strong>
-                            <p>Omicidi, Ariane, Jonah, comparsa di Metadrome.</p>
-                        </article>
-
-                        <article class="timeline-step">
-                            <strong>Discesa</strong>
-                            <p>Sostituzione di Jonah, condanna e satellite carcere.</p>
-                        </article>
-
-                        <article class="timeline-step">
-                            <strong>Ritorno</strong>
-                            <p>Metadrome torna sulla Terra e scatena il conflitto aperto.</p>
-                        </article>
-
-                        <article class="timeline-step">
-                            <strong>Guerra</strong>
-                            <p>Le sentinelle governative combattono per salvare l'ordine tecnico.</p>
-                        </article>
-
-                        <article class="timeline-step">
-                            <strong>Riemersione</strong>
-                            <p>Metadrome esce dalle profondita con i super cyborg.</p>
-                        </article>
-
-                        <article class="timeline-step">
-                            <strong>Separazione</strong>
-                            <p>Il Cavo viene tagliato, il sistema crolla, Metadrome scompare.</p>
-                        </article>
+                    <div class="countdown-card">
+                        <strong id="hours">0</strong>
+                        <span>Ore</span>
+                    </div>
+                    <div class="countdown-card">
+                        <strong id="minutes">0</strong>
+                        <span>Minuti</span>
                     </div>
                 </div>
-            </section>
 
-            <section class="section" id="archivio">
-                <div class="section-head">
-                    <div>
-                        <span class="eyebrow">Archivio futuro</span>
-                        <h2>Materiale visualizzabile in profondita</h2>
-                    </div>
-                    <p>
-                        Qui possiamo davvero espandere il sito nel tempo: pagine dense, documenti,
-                        schede, mappe del potere, dossier personaggi e tecnologie.
-                    </p>
-                </div>
-
-                <div class="grid-3">
-                    <article class="card">
-                        <span class="tag">Personaggi</span>
-                        <h3>Ariane, Jonah, Metadrome</h3>
-                        <p>
-                            Schede narrative, relazioni, traiettorie psicologiche e ruolo nella saga.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <span class="tag">Tecnologie</span>
-                        <h3>Rete, carceri, cyborg, varchi</h3>
-                        <p>
-                            Una sezione dove rendere credibili i sistemi tecnici e la loro evoluzione.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <span class="tag">Documenti</span>
-                        <h3>Log, messaggi, dossier</h3>
-                        <p>
-                            Il worldbuilding puo vivere anche come archivio pseudo-documentale, molto immersivo.
-                        </p>
-                    </article>
-                </div>
+                <p class="statement">
+                    Ariane manterra aperto il portale fino al <strong>11 aprile 3026</strong>.
+                    Dopo quella data, la finestra temporale si chiudera definitivamente.
+                </p>
             </section>
         </main>
 
         <footer class="footer">
-            <p>IAM World / bozza grafica iniziale per una saga espandibile.</p>
-            <p>Passo successivo: sottopagine vere per trilogia, universo e archivio.</p>
+            <p>Ingresso essenziale / fase iniziale del sito</p>
+            <p>Il mondo si apre nel secondo livello</p>
         </footer>
     </div>
+    <script>
+        const portalDeadline = new Date("3026-04-11T00:00:00+02:00").getTime();
+        const yearNode = document.getElementById("years");
+        const dayNode = document.getElementById("days");
+        const hourNode = document.getElementById("hours");
+        const minuteNode = document.getElementById("minutes");
+
+        function updateCountdown() {
+            const now = Date.now();
+            const distance = Math.max(portalDeadline - now, 0);
+
+            const minute = 1000 * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+            const year = day * 365.2425;
+
+            const years = Math.floor(distance / year);
+            const days = Math.floor((distance % year) / day);
+            const hours = Math.floor((distance % day) / hour);
+            const minutes = Math.floor((distance % hour) / minute);
+
+            yearNode.textContent = String(years);
+            dayNode.textContent = String(days);
+            hourNode.textContent = String(hours);
+            minuteNode.textContent = String(minutes);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+    </script>
 </body>
 </html>

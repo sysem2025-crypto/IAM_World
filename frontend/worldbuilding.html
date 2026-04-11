@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worldbuilding | IAM World</title>
+    <style>
+        :root {
+            --bg: #05070b;
+            --line: rgba(193, 222, 255, 0.16);
+            --line-strong: rgba(193, 222, 255, 0.34);
+            --text: #eef4ff;
+            --muted: #97a9c0;
+            --cold: #c5e2ff;
+            --accent: #99ccff;
+            --panel: rgba(8, 12, 18, 0.8);
+            --panel-strong: rgba(9, 14, 22, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 78% 10%, rgba(153, 204, 255, 0.14), transparent 18%),
+                radial-gradient(circle at 14% 18%, rgba(153, 204, 255, 0.08), transparent 14%),
+                linear-gradient(180deg, #05070b 0%, #09101a 54%, #05070b 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 94%);
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 0 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.78rem;
+            color: var(--cold);
+        }
+
+        .brand-mark {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(153, 204, 255, 0.82);
+        }
+
+        nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--cold);
+        }
+
+        .hero {
+            padding: 42px 0 28px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            font-size: 0.74rem;
+            margin-bottom: 14px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 400;
+        }
+
+        h1 {
+            font-size: clamp(3.8rem, 8vw, 6rem);
+            line-height: 0.92;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            max-width: 50ch;
+            margin: 0 auto;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .section {
+            padding: 18px 0 44px;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section-head p {
+            max-width: 56ch;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .grid-2, .grid-3 {
+            display: grid;
+            gap: 18px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .card {
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--panel);
+        }
+
+        .tag {
+            display: inline-block;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.72rem;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
+        .card p, .card li {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .card ul {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .map {
+            min-height: 280px;
+            border-radius: 22px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(circle at 72% 20%, rgba(153, 204, 255, 0.12), transparent 18%),
+                linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%),
+                var(--panel-strong);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .map strong {
+            display: block;
+            font-weight: 400;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .map span {
+            color: var(--muted);
+            max-width: 28ch;
+            line-height: 1.7;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 22px 0 28px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .section-head,
+            .footer {
+                display: grid;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 1120px);
+            }
+
+            .topbar {
+                display: grid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark"></span>
+                <span>IAM World</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="universo.html">Universo</a>
+                <a href="trilogy.html">Trilogy</a>
+                <a class="active" href="worldbuilding.html">Worldbuilding</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <p class="eyebrow">Atlante del mondo di Io sono</p>
+                <h1>Worldbuilding</h1>
+                <p>
+                    Qui si raccogliera l'intero universo di <strong>Io sono</strong>:
+                    geografia, mappe, Luna artificiale, terraformazione, personaggi e schede del romanzo.
+                </p>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Mappe</p>
+                        <h2>Geografie del sistema</h2>
+                    </div>
+                    <p>Prime aree da sviluppare visivamente con mappe dedicate, dossier e materiali consultabili.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="map">
+                        <div>
+                            <strong>Mappa di Nyork</strong>
+                            <span>La citta come snodo di rete, controllo, transito umano e densita narrativa.</span>
+                        </div>
+                    </div>
+                    <div class="map">
+                        <div>
+                            <strong>Mappa della Luna artificiale</strong>
+                            <span>Livelli tecnici, sale centrali, nodi di governo, silos, infrastrutture e aree proibite.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Civilta futura</p>
+                        <h2>Terraformazione ed espansione</h2>
+                    </div>
+                    <p>Il worldbuilding potra poi estendersi oltre la trilogia centrale con sistemi stellari vicini e nuovi mondi terraformati.</p>
+                </div>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <span class="tag">Terraformazione</span>
+                        <h3>Pianeti adattati</h3>
+                        <p>
+                            Sezione dedicata ai mondi trasformati, ai loro ecosistemi e alle infrastrutture necessarie per renderli abitabili.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <span class="tag">Infrastrutture</span>
+                        <h3>Rete interstellare</h3>
+                        <p>
+                            Collegamenti, trasporti, supporti vitali, nodi di controllo e logiche di espansione fuori dalla Terra.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <span class="tag">Conseguenze</span>
+                        <h3>Nuove civilta</h3>
+                        <p>
+                            Popolazioni, autonomie, fratture culturali e ridefinizione dell'umano quando la specie si distribuisce su piu mondi.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Personaggi</p>
+                        <h2>Schede del romanzo</h2>
+                    </div>
+                    <p>Prima impostazione per le schede personaggio che poi potremo ampliare con biografie, relazioni e ruoli nella saga.</p>
+                </div>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <span class="tag">Ariane</span>
+                        <h3>IA del Nodo Zero</h3>
+                        <ul>
+                            <li>intelligenza governativa centrale</li>
+                            <li>presenza riflessiva del sistema</li>
+                            <li>custode del portale temporale</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <span class="tag">Jonah</span>
+                        <h3>Figura di soglia</h3>
+                        <ul>
+                            <li>coinvolto nell'anomalia</li>
+                            <li>punto di passaggio identitario</li>
+                            <li>centrale nella prima frattura narrativa</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <span class="tag">Metadrome</span>
+                        <h3>Anomalia emergente</h3>
+                        <ul>
+                            <li>coscienza imprevista del sistema</li>
+                            <li>forza che rompe l'ordine</li>
+                            <li>asse centrale della trilogia</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Worldbuilding / archivio iniziale dell'universo di Io sono</p>
+            <p>Prime aree attive: mappe, terraformazione, personaggi</p>
+        </footer>
+    </div>
+</body>
+</html>
